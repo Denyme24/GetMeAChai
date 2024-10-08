@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
+import connectDB from "@/db/connectDB";
 
 const paymentSchema = new Schema({
   name: { type: String, required: true },
@@ -11,7 +12,7 @@ const paymentSchema = new Schema({
   updatedAt: { type: Date, default: Date.now },
   done: { type: Boolean, default: false },
 });
-
+await connectDB();
 // Check if the model already exists before defining it
 const Payment = mongoose.models.payment || model("payment", paymentSchema);
 

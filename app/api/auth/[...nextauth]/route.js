@@ -16,6 +16,7 @@ const authOptions = NextAuth({
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
+      console.log("email", email);
       if (account.provider === "github") {
         await connectDb();
 
