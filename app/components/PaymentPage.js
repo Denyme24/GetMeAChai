@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import Script from "next/script";
 import { initiatePayment } from "@/actions/useractions";
 import { useSession } from "next-auth/react";
-// import Payment from "@/models/payment";
 
 const PaymentPage = ({ username }) => {
   //   const { data: session } = useSession();
@@ -11,6 +10,7 @@ const PaymentPage = ({ username }) => {
   const handleChange = (e) => {
     setpaymentform({ ...paymentform, [e.target.name]: e.target.value });
   };
+
   const pay = async (amount) => {
     let a = await initiatePayment(amount, username, paymentform);
 
@@ -41,8 +41,6 @@ const PaymentPage = ({ username }) => {
       rzp1.open();
     };
   };
-
- 
 
   return (
     <>
@@ -91,7 +89,7 @@ const PaymentPage = ({ username }) => {
                 with a message "lots of ☕ for you"
               </div>
             </li>
-            {/* <li className="flex  items-center gap-2">
+            <li className="flex  items-center gap-2">
               <div className="image">
                 <script src="https://cdn.lordicon.com/lordicon.js"></script>
                 <lord-icon
@@ -104,8 +102,8 @@ const PaymentPage = ({ username }) => {
                 Priyanshu Donated <span className="font-bold"> Rs.1400</span>{" "}
                 with a message "lots of ☕ for you"
               </div>
-            </li> */}
-            {/* <li className="flex  items-center gap-2">
+            </li>
+            <li className="flex  items-center gap-2">
               <div className="image">
                 <script src="https://cdn.lordicon.com/lordicon.js"></script>
                 <lord-icon
@@ -117,8 +115,8 @@ const PaymentPage = ({ username }) => {
               <div>
                 Priyanshu Donated <span className="font-bold"> Rs.1400</span>{" "}
                 with a message "lots of ☕ for you"
-              </div>
-            </li> */}
+              </div>{" "}
+            </li>
           </ul>
         </div>
         <div className="makePayment w-1/2 bg-slate-900 rounded-lg text-white p-10 z-[1000]">
