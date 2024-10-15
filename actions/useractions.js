@@ -10,7 +10,7 @@ export const initiatePayment = async (amount, to_username, paymentform) => {
 
   //  creating a new Razorpay object with API credentials.
   var instance = new Razorpay({
-    key_id: process.env.KEY_ID,
+    key_id: process.env.NEXT_PUBLIC_KEY_ID,
     key_secret: process.env.KEY_SECRET,
   });
 
@@ -30,3 +30,15 @@ export const initiatePayment = async (amount, to_username, paymentform) => {
   return x;
 };
 export default initiatePayment;
+
+export const fetchuser = async (username) => {
+  await connectDb();
+  let user = await User.findOne({ username: username });
+  let userobj = user.toObject({ flattenObjectIds: true });
+  return userobj;
+};
+
+export const fetchPayments = async (username) => {
+  let payment = Payment.find({ to_user: username }).sort({ amount: -1 }).lean();
+  return payment;
+};

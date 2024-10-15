@@ -3,12 +3,27 @@ import React, { useState, useEffect } from "react";
 import Script from "next/script";
 import { initiatePayment } from "@/actions/useractions";
 import { useSession } from "next-auth/react";
+import { fetchuser, fetchPayments } from "@/actions/useractions";
 
 const PaymentPage = ({ username }) => {
   //   const { data: session } = useSession();
   const [paymentform, setpaymentform] = useState({});
+  const [currentUser, setcurrentUser] = useState({});
+  const [dbPayment, setdbPayment] = useState([]);
+  useEffect(() => {
+    getData();
+  }, []);
+
   const handleChange = (e) => {
     setpaymentform({ ...paymentform, [e.target.name]: e.target.value });
+  };
+
+  const getData = async (params) => {
+    let dbUser = await fetchuser(username);
+    setcurrentUser(dbUser);
+    let dbPayment = await fetchPayments(username);
+    setdbPayment(dbPayment);
+    console.log(dbUser, dbPayment);
   };
 
   const pay = async (amount) => {
@@ -16,14 +31,14 @@ const PaymentPage = ({ username }) => {
 
     let orderId = a.id;
     var options = {
-      key: process.env.KEY_ID,
+      key: process.env.NEXT_PUBLIC_KEY_ID,
       amount: amount,
       currency: "INR",
       name: "Get Me a Chai",
       description: "Test Transaction",
       image: "https://example.com/your_logo",
       order_id: orderId,
-      callback_url: `${process.env.URL}/api/razorpay`,
+      callback_url: `${process.env.NEXT_PUBLIC_URL}/api/razorpay`,
       prefill: {
         name: "Gaurav Kumar",
         email: "gaurav.kumar@example.com",
@@ -75,48 +90,27 @@ const PaymentPage = ({ username }) => {
           <h2 className="my-2 font-bold text-2xl">Supporters</h2>
           <div className="line bg-white h-[1px] opacity-15 mb-2"></div>
           <ul className="text-lg">
-            <li className="flex  items-center gap-2">
-              <div className="image">
-                <script src="https://cdn.lordicon.com/lordicon.js"></script>
-                <lord-icon
-                  src="https://cdn.lordicon.com/xcxzayqr.json"
-                  trigger="loop"
-                  style={{ width: "25px", height: "25px" }}
-                ></lord-icon>
-              </div>
-              <div>
-                Priyanshu Donated <span className="font-bold"> Rs.1400</span>{" "}
-                with a message "lots of ☕ for you"
-              </div>
-            </li>
-            <li className="flex  items-center gap-2">
-              <div className="image">
-                <script src="https://cdn.lordicon.com/lordicon.js"></script>
-                <lord-icon
-                  src="https://cdn.lordicon.com/xcxzayqr.json"
-                  trigger="loop"
-                  style={{ width: "25px", height: "25px" }}
-                ></lord-icon>
-              </div>
-              <div>
-                Priyanshu Donated <span className="font-bold"> Rs.1400</span>{" "}
-                with a message "lots of ☕ for you"
-              </div>
-            </li>
-            <li className="flex  items-center gap-2">
-              <div className="image">
-                <script src="https://cdn.lordicon.com/lordicon.js"></script>
-                <lord-icon
-                  src="https://cdn.lordicon.com/xcxzayqr.json"
-                  trigger="loop"
-                  style={{ width: "25px", height: "25px" }}
-                ></lord-icon>
-              </div>
-              <div>
-                Priyanshu Donated <span className="font-bold"> Rs.1400</span>{" "}
-                with a message "lots of ☕ for you"
-              </div>{" "}
-            </li>
+            {dbPayment.map((items) => {
+              return (
+                <>
+                  <li className="flex  items-center gap-2">
+                    <div className="image">
+                      <script src="https://cdn.lordicon.com/lordicon.js"></script>
+                      <lord-icon
+                        src="https://cdn.lordicon.com/xcxzayqr.json"
+                        trigger="loop"
+                        style={{ width: "25px", height: "25px" }}
+                      ></lord-icon>
+                    </div>
+                    <div>
+                      {items.name} Donated{" "}
+                      <span className="font-bold"> Rs.{items.amount}.00</span>{" "}
+                      with a message "{items.message}"
+                    </div>
+                  </li>
+                </>
+              );
+            })}
           </ul>
         </div>
         <div className="makePayment w-1/2 bg-slate-900 rounded-lg text-white p-10 z-[1000]">
@@ -149,6 +143,10 @@ const PaymentPage = ({ username }) => {
               placeholder="Enter amount"
             />
             <button
+              onClick={() => {
+                pay(Number.parseInt(paymentform.amount));
+              }}
+              id="rzp-button1"
               type="button"
               className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
             >
@@ -178,7 +176,7 @@ const PaymentPage = ({ username }) => {
             </button>
             <button
               onClick={() => {
-                pay(50000);
+                pay(50);
               }}
               className="bg-slate-800 p-3 rounded-lg"
               id="rzp-button1"
