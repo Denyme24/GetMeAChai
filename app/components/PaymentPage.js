@@ -6,10 +6,10 @@ import { useSession } from "next-auth/react";
 import { fetchuser, fetchPayments } from "@/actions/useractions";
 
 const PaymentPage = ({ username }) => {
-  //   const { data: session } = useSession();
   const [paymentform, setpaymentform] = useState({});
   const [currentUser, setcurrentUser] = useState({});
   const [dbPayment, setdbPayment] = useState([]);
+
   useEffect(() => {
     getData();
   }, []);
@@ -18,18 +18,17 @@ const PaymentPage = ({ username }) => {
     setpaymentform({ ...paymentform, [e.target.name]: e.target.value });
   };
 
-  const getData = async (params) => {
+  const getData = async () => {
     let dbUser = await fetchuser(username);
     setcurrentUser(dbUser);
     let dbPayment = await fetchPayments(username);
     setdbPayment(dbPayment);
-    // console.log(dbUser, dbPayment);
   };
 
   const pay = async (amount) => {
     let a = await initiatePayment(amount, username, paymentform);
-
     let orderId = a.id;
+
     var options = {
       key: process.env.NEXT_PUBLIC_KEY_ID,
       amount: amount,
@@ -50,11 +49,14 @@ const PaymentPage = ({ username }) => {
       theme: {
         color: "#3399cc",
       },
+      handler: function (response) {
+        // Handle the response from Razorpay
+        console.log(response);
+      },
     };
+
     var rzp1 = new Razorpay(options);
-    document.getElementById("rzp-button1").onclick = function (e) {
-      rzp1.open();
-    };
+    rzp1.open();
   };
 
   return (
@@ -91,32 +93,29 @@ const PaymentPage = ({ username }) => {
           <div className="line bg-white h-[1px] opacity-15 mb-2"></div>
           <ul className="text-lg">
             {dbPayment.length == 0 && (
-              <ul className="shadow-lg rounded-lg p-4 m-4 relative z-10 transform transition-transform hover:scale-105">
+              <ul className="text-white shadow-lg rounded-lg p-4 m-4 relative z-10">
                 No payments yet! 😣
               </ul>
             )}
             {dbPayment.map((items) => {
               return (
-                <>
-                  <li className="flex  items-center gap-2">
-                    <div className="image">
-                      <script src="https://cdn.lordicon.com/lordicon.js"></script>
-                      <lord-icon
-                        src="https://cdn.lordicon.com/xcxzayqr.json"
-                        trigger="loop"
-                        style={{ width: "25px", height: "25px" }}
-                      ></lord-icon>
-                    </div>
-                    <div>
-                      {items.name} Donated{" "}
-                      <span className="font-bold">
-                        {" "}
-                        Rs.{Number.parseInt(items.amount) / 100}
-                      </span>{" "}
-                      with a message "{items.message}"
-                    </div>
-                  </li>
-                </>
+                <li key={items.id} className="flex items-center gap-2">
+                  <div className="image">
+                    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+                    <lord-icon
+                      src="https://cdn.lordicon.com/xcxzayqr.json"
+                      trigger="loop"
+                      style={{ width: "25px", height: "25px" }}
+                    ></lord-icon>
+                  </div>
+                  <div>
+                    {items.name} Donated{" "}
+                    <span className="font-bold">
+                      Rs.{Number.parseInt(items.amount) / 100}
+                    </span>{" "}
+                    with a message "{items.message}"
+                  </div>
+                </li>
               );
             })}
           </ul>
@@ -164,7 +163,7 @@ const PaymentPage = ({ username }) => {
           </div>
           <div className="flex gap-2 mt-6">
             <button
-              onclick={() => {
+              onClick={() => {
                 pay(10);
               }}
               className="bg-slate-800 p-3 rounded-lg"
@@ -174,9 +173,6 @@ const PaymentPage = ({ username }) => {
             <button
               onClick={() => {
                 pay(20);
-                {
-                  console.log("20 is clicked");
-                }
               }}
               className="bg-slate-800 p-3 rounded-lg"
             >
@@ -187,7 +183,6 @@ const PaymentPage = ({ username }) => {
                 pay(50);
               }}
               className="bg-slate-800 p-3 rounded-lg"
-              id="rzp-button1"
             >
               ₹50
             </button>
@@ -199,7 +194,14 @@ const PaymentPage = ({ username }) => {
             >
               ₹100
             </button>
-            <button className="bg-slate-800 p-3 rounded-lg">₹1000</button>
+            <button
+              onClick={() => {
+                pay(1000);
+              }}
+              className="bg-slate-800 p-3 rounded-lg"
+            >
+              ₹1000
+            </button>
           </div>
         </div>
       </div>
