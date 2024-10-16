@@ -14,6 +14,10 @@ const PaymentPage = ({ username }) => {
     getData();
   }, []);
 
+  // useEffect(() => {
+  //   console.log("currentUser updated:", currentUser); // Log currentUser whenever it changes
+  // }, [currentUser]);
+
   const handleChange = (e) => {
     setpaymentform({ ...paymentform, [e.target.name]: e.target.value });
   };
@@ -21,8 +25,10 @@ const PaymentPage = ({ username }) => {
   const getData = async () => {
     let dbUser = await fetchuser(username);
     setcurrentUser(dbUser);
-    let dbPayment = await fetchPayments(username);
-    setdbPayment(dbPayment);
+    let Payment = await fetchPayments(username);
+    setdbPayment(Payment);
+    console.log(dbUser);
+    // console.log(currentUser);
   };
 
   const pay = async (amount) => {
@@ -87,8 +93,7 @@ const PaymentPage = ({ username }) => {
         <div className="text-slate-400">2 posts</div>
       </div>
       <div className="payment flex gap-3 w-[80%] container mx-auto mb-10 ">
-        <div className="supporters w-1/2 bg-slate-900 rounded-lg text-white p-10 z-[1000] ">
-          {/* Show list of all the supporters as a leaderboard */}
+        <div className="supporters min-w-[40vw] max-h-[60vh] bg-slate-900 rounded-lg text-white p-10 z-[1000] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 ">
           <h2 className="my-2 font-bold text-2xl">Supporters</h2>
           <div className="line bg-white h-[1px] opacity-15 mb-2"></div>
           <ul className="text-lg">
@@ -120,7 +125,7 @@ const PaymentPage = ({ username }) => {
             })}
           </ul>
         </div>
-        <div className="makePayment w-1/2 bg-slate-900 rounded-lg text-white p-10 z-[1000]">
+        <div className="makePayment min-w-[40vw] max-h-[60vh] bg-slate-900 rounded-lg text-white p-10 z-[1000]">
           <h2 className="text-2xl font-bold my-5">Make a Payment</h2>
           <div className="flex gap-2 flex-col">
             {/* input for name and message */}
