@@ -42,3 +42,16 @@ export const fetchPayments = async (username) => {
   let payment = Payment.find({ to_user: username }).sort({ amount: -1 }).lean();
   return payment;
 };
+
+export const updateProfile = async (data, oldusername) => {
+  await connectDb();
+  let ndata = Object.fromEntries(data);
+  // if the username is updated , check if the username is available
+  if (oldusername !== ndata.username) {
+    let existingData = await User.findOne({ username: ndata.username });
+    if (existingData) {
+      return { error: "username already exist" };
+    }
+  }
+  await User.updateOne({ email: ndata.email }, ndata);
+};

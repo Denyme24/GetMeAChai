@@ -2,15 +2,18 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { fetchuser, updateProfile } from "@/actions/useractions";
 
 const Dashboard = () => {
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const router = useRouter();
   const [form, setform] = useState({});
 
   useEffect(() => {
     if (!session) {
       router.push("/login");
+    } else {
+      getdata();
     }
   }, [router, session]);
 
@@ -18,11 +21,14 @@ const Dashboard = () => {
     setform({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setform({});
-    // Add your form submission logic here
-    console.log("Form submitted:", form);
+  const getdata = async () => {
+    let fillData = await fetchuser(session.user.name);
+    setform(fillData);
+  };
+  const handleSubmit = async (e) => {
+    // update();
+    let updProf = await updateProfile(e, session.user.name);
+    alert("Profile Updated");
   };
 
   return (
@@ -33,7 +39,7 @@ const Dashboard = () => {
           <h1 className="text-center my-5 text-3xl font-bold">
             Welcome to your Dashboard
           </h1>
-          <form className="max-w-2xl mx-auto" onSubmit={handleSubmit}>
+          <form className="max-w-2xl mx-auto" action={handleSubmit}>
             <div className="my-2">
               <label
                 htmlFor="name"
@@ -105,17 +111,17 @@ const Dashboard = () => {
             </div>
             <div className="my-2">
               <label
-                htmlFor="coverimage"
+                htmlFor="coverpic"
                 className="flex flex-row gap-1 mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 Cover Picture (as URL)
               </label>
               <input
                 type="text"
-                name="coverimage"
-                value={form.coverimage ? form.coverimage : ""}
+                name="coverpic"
+                value={form.coverpic ? form.coverpic : ""}
                 onChange={handleChange}
-                id="coverimage"
+                id="coverpic"
                 placeholder="Enter the name to be displayed"
                 className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />

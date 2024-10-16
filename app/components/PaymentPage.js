@@ -23,7 +23,7 @@ const PaymentPage = ({ username }) => {
     setcurrentUser(dbUser);
     let dbPayment = await fetchPayments(username);
     setdbPayment(dbPayment);
-    console.log(dbUser, dbPayment);
+    // console.log(dbUser, dbPayment);
   };
 
   const pay = async (amount) => {
@@ -90,6 +90,11 @@ const PaymentPage = ({ username }) => {
           <h2 className="my-2 font-bold text-2xl">Supporters</h2>
           <div className="line bg-white h-[1px] opacity-15 mb-2"></div>
           <ul className="text-lg">
+            {dbPayment.length == 0 && (
+              <ul className="shadow-lg rounded-lg p-4 m-4 relative z-10 transform transition-transform hover:scale-105">
+                No payments yet! 😣
+              </ul>
+            )}
             {dbPayment.map((items) => {
               return (
                 <>
@@ -104,7 +109,10 @@ const PaymentPage = ({ username }) => {
                     </div>
                     <div>
                       {items.name} Donated{" "}
-                      <span className="font-bold"> Rs.{items.amount}.00</span>{" "}
+                      <span className="font-bold">
+                        {" "}
+                        Rs.{Number.parseInt(items.amount) / 100}
+                      </span>{" "}
                       with a message "{items.message}"
                     </div>
                   </li>
@@ -143,10 +151,10 @@ const PaymentPage = ({ username }) => {
               placeholder="Enter amount"
             />
             <button
-              onClick={() => {
-                pay(Number.parseInt(paymentform.amount));
-              }}
               id="rzp-button1"
+              onClick={() => {
+                pay(Number.parseInt(paymentform.amount) * 100);
+              }}
               type="button"
               className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
             >
