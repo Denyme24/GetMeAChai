@@ -54,7 +54,7 @@ const Navbar = () => {
                     width={25}
                     className="rounded-full"
                   />
-                  <span>Welcome, {session.user.name}</span>
+                  <span>Welcome, {session.user.email}</span>
                 </div>
                 <svg
                   className="w-2.5 h-2.5 ms-3"

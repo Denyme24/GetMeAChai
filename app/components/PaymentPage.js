@@ -4,6 +4,8 @@ import Script from "next/script";
 import { initiatePayment } from "@/actions/useractions";
 import { useSession } from "next-auth/react";
 import { fetchuser, fetchPayments } from "@/actions/useractions";
+import CountUp from "react-countup";
+// import payments from "razorpay/dist/types/payments";
 
 const PaymentPage = ({ username }) => {
   const [paymentform, setpaymentform] = useState({});
@@ -15,8 +17,10 @@ const PaymentPage = ({ username }) => {
   }, []);
 
   // useEffect(() => {
-  //   console.log("currentUser updated:", currentUser); // Log currentUser whenever it changes
-  // }, [currentUser]);
+  //   console.log("currentUser updated:", currentUser);
+  //   console.log("Payment from database", dbPayment);
+  //   console.log(dbPayment.length);
+  // }, [currentUser, dbPayment]);
 
   const handleChange = (e) => {
     setpaymentform({ ...paymentform, [e.target.name]: e.target.value });
@@ -27,7 +31,7 @@ const PaymentPage = ({ username }) => {
     setcurrentUser(dbUser);
     let Payment = await fetchPayments(username);
     setdbPayment(Payment);
-    console.log(dbUser);
+    // console.log(dbUser);
     // console.log(currentUser);
   };
 
@@ -67,7 +71,6 @@ const PaymentPage = ({ username }) => {
 
   return (
     <>
-      
       <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
 
       <div className="cover w-full relative">
@@ -86,12 +89,23 @@ const PaymentPage = ({ username }) => {
           />
         </div>
       </div>
-      <div className="info flex justify-center items-center my-12 text-center flex-col">
+      <div className="info flex gap-2 justify-center items-center my-12 ml-[54px] mx-8 text-center flex-col">
         <div className="font-bold text-lg"> @{username}</div>
+        <div className="text-slate-400">Help {currentUser.name} get a ☕</div>
         <div className="text-slate-400">
-          Total Conversion Mod for Bannerlord
+          Payments{" "}
+          <span className=" text-white font-bold text-lg">
+            {dbPayment.length}
+          </span>{" "}
+          . Total Amount Raised ₹{" "}
+          <span className="font-bold text-lg animate-pulse text-white">
+            <CountUp
+              end={dbPayment.reduce((acc, item) => acc + item.amount, 0)}
+              duration={1}
+              separator=","
+            />
+          </span>
         </div>
-        <div className="text-slate-400">2 posts</div>
       </div>
       <div className="payment flex gap-3 w-[80%] container mx-auto mb-10 ">
         <div className="supporters min-w-[40vw] max-h-[60vh] bg-slate-900 rounded-lg text-white p-10 z-[1000] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 ">

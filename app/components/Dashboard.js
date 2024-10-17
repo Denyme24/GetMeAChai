@@ -27,7 +27,9 @@ const Dashboard = () => {
   const getdata = async () => {
     let fillData = await fetchuser(session.user.name);
     setform(fillData);
+    // console.log(session.user);
   };
+  
   const handleSubmit = async (e) => {
     // update();
     let updProf = await updateProfile(e, session.user.name);
