@@ -8,10 +8,15 @@ export const initiatePayment = async (amount, to_username, paymentform) => {
   // connecting to the database.
   await connectDb();
 
+  // fetch the secret of the user who is getting the payment
+  let user = await User.findOne({ username: to_username });
+  const secret = user.razorpaysecret;
+  const id = user.razorpayid;
+
   //  creating a new Razorpay object with API credentials.
   var instance = new Razorpay({
-    key_id: process.env.NEXT_PUBLIC_KEY_ID,
-    key_secret: process.env.KEY_SECRET,
+    key_id: id,
+    key_secret: secret,
   });
 
   let options = {
@@ -22,7 +27,7 @@ export const initiatePayment = async (amount, to_username, paymentform) => {
   let x = await instance.orders.create(options);
   await Payment.create({
     oid: x.id,
-    amount: amount,
+    amount: amount / 100,
     to_user: to_username,
     name: paymentform.name,
     message: paymentform.message,
@@ -39,6 +44,7 @@ export const fetchuser = async (username) => {
 };
 
 export const fetchPayments = async (username) => {
+  // to fetch payments only which have "done : true" status
   let payment = Payment.find({ to_user: username }).sort({ amount: -1 }).lean();
   return payment;
 };

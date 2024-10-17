@@ -36,7 +36,7 @@ const PaymentPage = ({ username }) => {
     let orderId = a.id;
 
     var options = {
-      key: process.env.NEXT_PUBLIC_KEY_ID,
+      key: currentUser.razorpayid,
       amount: amount,
       currency: "INR",
       name: "Get Me a Chai",
@@ -67,12 +67,13 @@ const PaymentPage = ({ username }) => {
 
   return (
     <>
+      
       <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
 
       <div className="cover w-full relative">
         <img
           className="object-cover h-[45vh] w-full "
-          src="https://c10.patreonusercontent.com/4/patreon-media/p/campaign/8396999/b7785c2bdfc64f23aeeebab0321e0b21/eyJ3IjoxNjAwLCJ3ZSI6MX0%3D/13.png?token-time=1730678400&token-hash=-IBAzQXirPo-XLINGiMhTLZdvXcxWDIrc31-TYaaub0%3D"
+          src={currentUser.coverpic}
           alt=""
         />
         <div>
@@ -80,7 +81,7 @@ const PaymentPage = ({ username }) => {
             className="absolute -bottom-10 right-[46%] rounded-lg border-[1px] border-white"
             width={100}
             height={100}
-            src="https://c10.patreonusercontent.com/4/patreon-media/p/campaign/8396999/63ffb8058081458bbad29aa538533bee/eyJoIjoxMDgwLCJ3IjoxMDgwfQ%3D%3D/15.gif?token-time=1729468800&token-hash=psksoqqhEpnwRJ2qA10_jsEGQlJFT-l2fCiHwIZmldc%3D"
+            src={currentUser.profilepic}
             alt=""
           />
         </div>
@@ -116,7 +117,7 @@ const PaymentPage = ({ username }) => {
                   <div>
                     {items.name} Donated{" "}
                     <span className="font-bold">
-                      Rs.{Number.parseInt(items.amount) / 100}
+                      Rs.{Number.parseInt(items.amount)}
                     </span>{" "}
                     with a message "{items.message}"
                   </div>
@@ -160,45 +161,19 @@ const PaymentPage = ({ username }) => {
                 pay(Number.parseInt(paymentform.amount) * 100);
               }}
               type="button"
-              className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              className={`text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ${
+                paymentform.name?.length < 3 || paymentform.message?.length < 3
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+              }`}
+              disabled={
+                paymentform.name?.length < 3 || paymentform.message?.length < 3
+              }
             >
               Pay
             </button>
-            {/* or choose from these amounts */}
           </div>
           <div className="flex gap-2 mt-6">
-            <button
-              onClick={() => {
-                pay(10);
-              }}
-              className="bg-slate-800 p-3 rounded-lg"
-            >
-              ₹10
-            </button>
-            <button
-              onClick={() => {
-                pay(20);
-              }}
-              className="bg-slate-800 p-3 rounded-lg"
-            >
-              ₹20
-            </button>
-            <button
-              onClick={() => {
-                pay(50);
-              }}
-              className="bg-slate-800 p-3 rounded-lg"
-            >
-              ₹50
-            </button>
-            <button
-              onClick={() => {
-                pay(100);
-              }}
-              className="bg-slate-800 p-3 rounded-lg"
-            >
-              ₹100
-            </button>
             <button
               onClick={() => {
                 pay(1000);
@@ -206,6 +181,38 @@ const PaymentPage = ({ username }) => {
               className="bg-slate-800 p-3 rounded-lg"
             >
               ₹1000
+            </button>
+            <button
+              onClick={() => {
+                pay(2000);
+              }}
+              className="bg-slate-800 p-3 rounded-lg"
+            >
+              ₹2000
+            </button>
+            <button
+              onClick={() => {
+                pay(5000);
+              }}
+              className="bg-slate-800 p-3 rounded-lg"
+            >
+              ₹5000
+            </button>
+            <button
+              onClick={() => {
+                pay(10000);
+              }}
+              className="bg-slate-800 p-3 rounded-lg"
+            >
+              ₹10000
+            </button>
+            <button
+              onClick={() => {
+                pay(20000);
+              }}
+              className="bg-slate-800 p-3 rounded-lg"
+            >
+              ₹20000
             </button>
           </div>
         </div>
