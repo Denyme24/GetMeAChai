@@ -5,10 +5,13 @@ import { initiatePayment } from "@/actions/useractions";
 import { useSession } from "next-auth/react";
 import { fetchuser, fetchPayments } from "@/actions/useractions";
 import CountUp from "react-countup";
-// import payments from "razorpay/dist/types/payments";
 
 const PaymentPage = ({ username }) => {
-  const [paymentform, setpaymentform] = useState({});
+  const [paymentform, setpaymentform] = useState({
+    name: "",
+    message: "",
+    amount: "",
+  });
   const [currentUser, setcurrentUser] = useState({});
   const [dbPayment, setdbPayment] = useState([]);
 
@@ -31,8 +34,6 @@ const PaymentPage = ({ username }) => {
     setcurrentUser(dbUser);
     let Payment = await fetchPayments(username);
     setdbPayment(Payment);
-    // console.log(dbUser);
-    // console.log(currentUser);
   };
 
   const pay = async (amount) => {
@@ -176,7 +177,9 @@ const PaymentPage = ({ username }) => {
               }}
               type="button"
               className={`text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ${
-                paymentform.name?.length < 3 || paymentform.message?.length < 3
+                paymentform.name?.length < 3 ||
+                paymentform.message?.length < 3 ||
+                paymentform.amount?.length < 1
                   ? "opacity-50 cursor-not-allowed"
                   : ""
               }`}

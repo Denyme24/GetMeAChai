@@ -16,18 +16,18 @@ const authOptions = NextAuth({
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      console.log("email", email);
+      
       if (account.provider === "github") {
         await connectDb();
 
         const existingUser = await User.findOne({ email: email });
-        console.log("existing console", existingUser);
+       
         if (!existingUser) {
           const newUser = await User.create({
             email: user.email,
             username: user.email.split("@")[0],
           });
-          // console.log("user.name", user.name);
+         
         }
       }
       return true;

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -7,11 +7,15 @@ const Login = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
+  useEffect(() => {
+    document.title = "Login - Get Me a Chai";
+  }, []);
+
   if (session) {
     router.push("/dashboard");
   } else if (session === null) {
     router.push("/login");
-  } 
+  }
 
   return (
     <>

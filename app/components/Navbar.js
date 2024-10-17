@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 const Navbar = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  // console.log(session);
+ 
   const [showDropDown, setshowDropDown] = useState(false);
   const handleLogout = async () => {
     await signOut({ redirect: false });
