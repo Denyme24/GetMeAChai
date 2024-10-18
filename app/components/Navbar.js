@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 const Navbar = () => {
   const router = useRouter();
   const { data: session } = useSession();
- 
+
   const [showDropDown, setshowDropDown] = useState(false);
   const handleLogout = async () => {
     await signOut({ redirect: false });
@@ -43,7 +43,7 @@ const Navbar = () => {
                 }}
                 id="dropdownDefaultButton"
                 data-dropdown-toggle="dropdown"
-                className="text-white bg-blue-700 mx-4 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="text-white bg-blue-700 md:mx-4 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 md:font-medium rounded-lg md:text-sm md:px-5 md:py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-[40vw] h-[3vh] md:w-auto md:h-auto overflow-hidden text-[10px] "
                 type="button"
               >
                 <div className="flex justify-center items-center gap-2">
@@ -52,7 +52,7 @@ const Navbar = () => {
                     alt="image"
                     height={25}
                     width={25}
-                    className="rounded-full"
+                    className="rounded-full md:ml-0 ml-1"
                   />
                   <span>Welcome, {session.user.email}</span>
                 </div>
@@ -75,9 +75,9 @@ const Navbar = () => {
 
               <div
                 id="dropdown"
-                className={`z-10 ${
+                className={`z-10  ${
                   showDropDown ? "" : "hidden"
-                } bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-900 absolute right-12 mt-4 cursor-pointer text-center `}
+                } bg-white divide-y divide-gray-100 rounded-lg shadow md:w-44 md:dark:bg-gray-900 dark:bg-gray-900  absolute md:right-12 md:mt-4 cursor-pointer text-center md:h-auto  h-[8vh] w-[30vw] right-6  `}
               >
                 <ul
                   className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -86,7 +86,7 @@ const Navbar = () => {
                   <li className="cursor-pointer">
                     <Link
                       href={"/dashboard"}
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full"
+                      className="block md:px-4 md:py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white md:w-full text-xs md:text-lg"
                     >
                       Dashboard
                     </Link>
@@ -96,7 +96,7 @@ const Navbar = () => {
                     <Link
                       href={"#"}
                       onClick={handleLogout}
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full cursor-pointer"
+                      className="block md:px-4 px-2 py-1 md:py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white md:w-full cursor-pointer text-xs md:text-lg"
                     >
                       Logout
                     </Link>
@@ -104,7 +104,7 @@ const Navbar = () => {
                   <li className="cursor-pointer">
                     <Link
                       href={`/${session.user.name}`}
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      class="block  md:px-4 px-2 py-1 md:py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-xs md:text-lg"
                     >
                       Your page
                     </Link>

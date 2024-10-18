@@ -37,3 +37,5 @@ next-env.d.ts
 
 notes.txt
 directory.png
+app/assets/
+mdNotes/

@@ -19,12 +19,6 @@ const PaymentPage = ({ username }) => {
     getData();
   }, []);
 
-  // useEffect(() => {
-  //   console.log("currentUser updated:", currentUser);
-  //   console.log("Payment from database", dbPayment);
-  //   console.log(dbPayment.length);
-  // }, [currentUser, dbPayment]);
-
   const handleChange = (e) => {
     setpaymentform({ ...paymentform, [e.target.name]: e.target.value });
   };
@@ -61,7 +55,6 @@ const PaymentPage = ({ username }) => {
         color: "#3399cc",
       },
       handler: function (response) {
-        // Handle the response from Razorpay
         console.log(response);
       },
     };
@@ -76,21 +69,21 @@ const PaymentPage = ({ username }) => {
 
       <div className="cover w-full relative">
         <img
-          className="object-cover h-[45vh] w-full "
+          className="object-cover h-[30vh] md:h-[45vh] w-full"
           src={currentUser.coverpic}
           alt=""
         />
         <div>
           <img
-            className="absolute -bottom-10 right-[46%] rounded-lg border-[1px] border-white"
-            width={100}
-            height={100}
+            className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 rounded-lg border-[1px] border-white"
+            width={80}
+            height={80}
             src={currentUser.profilepic}
             alt=""
           />
         </div>
       </div>
-      <div className="info flex gap-2 justify-center items-center my-12 ml-[54px] mx-8 text-center flex-col">
+      <div className="info flex gap-2 justify-center items-center my-12 mx-4 md:mx-8 text-center flex-col">
         <div className="font-bold text-lg"> @{username}</div>
         <div className="text-slate-400">Help {currentUser.name} get a ☕</div>
         <div className="text-slate-400">
@@ -108,8 +101,8 @@ const PaymentPage = ({ username }) => {
           </span>
         </div>
       </div>
-      <div className="payment flex gap-3 w-[80%] container mx-auto mb-10 ">
-        <div className="supporters min-w-[40vw] max-h-[60vh] bg-slate-900 rounded-lg text-white p-10 z-[1000] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 ">
+      <div className="payment flex flex-col md:flex-row gap-3 w-full md:w-[80%] container mx-auto mb-10 px-4 md:px-0">
+        <div className="supporters w-full md:min-w-[40vw] max-h-[60vh] bg-slate-900 rounded-lg text-white p-4 md:p-10 z-[1000] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 mb-6 md:mb-0">
           <h2 className="my-2 font-bold text-2xl">Supporters</h2>
           <div className="line bg-white h-[1px] opacity-15 mb-2"></div>
           <ul className="text-lg">
@@ -141,10 +134,9 @@ const PaymentPage = ({ username }) => {
             })}
           </ul>
         </div>
-        <div className="makePayment min-w-[40vw] max-h-[60vh] bg-slate-900 rounded-lg text-white p-10 z-[1000]">
+        <div className="makePayment w-full md:min-w-[40vw] max-h-[60vh] bg-slate-900 rounded-lg text-white p-4 md:p-10 z-[1000]">
           <h2 className="text-2xl font-bold my-5">Make a Payment</h2>
           <div className="flex gap-2 flex-col">
-            {/* input for name and message */}
             <input
               name="name"
               value={paymentform.name ? paymentform.name : ""}
@@ -190,47 +182,16 @@ const PaymentPage = ({ username }) => {
               Pay
             </button>
           </div>
-          <div className="flex gap-2 mt-6">
-            <button
-              onClick={() => {
-                pay(1000);
-              }}
-              className="bg-slate-800 p-3 rounded-lg"
-            >
-              ₹1000
-            </button>
-            <button
-              onClick={() => {
-                pay(2000);
-              }}
-              className="bg-slate-800 p-3 rounded-lg"
-            >
-              ₹2000
-            </button>
-            <button
-              onClick={() => {
-                pay(5000);
-              }}
-              className="bg-slate-800 p-3 rounded-lg"
-            >
-              ₹5000
-            </button>
-            <button
-              onClick={() => {
-                pay(10000);
-              }}
-              className="bg-slate-800 p-3 rounded-lg"
-            >
-              ₹10000
-            </button>
-            <button
-              onClick={() => {
-                pay(20000);
-              }}
-              className="bg-slate-800 p-3 rounded-lg"
-            >
-              ₹20000
-            </button>
+          <div className="flex flex-wrap gap-2 mt-6">
+            {[1000, 2000, 5000, 10000, 20000].map((amount) => (
+              <button
+                key={amount}
+                onClick={() => pay(amount)}
+                className="bg-slate-800 p-2 md:p-3 rounded-lg text-sm md:text-base flex-grow"
+              >
+                ₹{amount}
+              </button>
+            ))}
           </div>
         </div>
       </div>
