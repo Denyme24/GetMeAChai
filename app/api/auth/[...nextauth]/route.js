@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
+import mongoose from "mongoose";
 import User from "@/models/user";
 import connectDb from "@/db/connectDB";
 
@@ -11,45 +12,37 @@ const authOptions = NextAuth({
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile, email }) {
+    async signIn({ user, account, profile, email, credentials }) {
       try {
-        // Ensure database connection
-        await connectDb();
+        if (account.provider === "github") {
+          await connectDb(); // Ensure database connection
 
-        // Check if the user already exists
-        const existingUser = await User.findOne({ email: email });
-        if (!existingUser) {
-          // Create a new user if they don't exist
-          await User.create({
-            email: user.email,
-            username: user.email.split("@")[0],
-          });
+          const existingUser = await User.findOne({ email: email });
+          if (!existingUser) {
+            await User.create({
+              email: user.email,
+              username: user.email.split("@")[0],
+            });
+          }
         }
         return true;
       } catch (error) {
-        console.error("Error in signIn callback:", error);
-        return false; // Deny sign-in on error
+        console.error("Error in signIn callback:", error); // Added logging
+        return false;
       }
     },
-    async session({ session }) {
+    async session({ session, token, user }) {
       try {
-        // Ensure database connection
-        await connectDb();
-
-        // Fetch the user from the database
+        await connectDb(); // Ensure database connection
         const dbUser = await User.findOne({ email: session.user.email });
-        if (dbUser) {
-          session.user.name = dbUser.username; // Set the username in the session
-        }
+        session.user.name = dbUser.username;
         return session;
       } catch (error) {
-        console.error("Error in session callback:", error);
-        return session; // Return the session even if there's an error
+        console.error("Error in session callback:", error); // Added logging
+        return session;
       }
     },
   },
-
-  debug: process.env.NODE_ENV === "development", // Enable debug messages in development
 });
 
 export { authOptions as GET, authOptions as POST };
