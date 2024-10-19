@@ -48,10 +48,8 @@ const authOptions = NextAuth({
       }
     },
   },
-  pages: {
-    signIn: '/auth/signin', // Custom sign-in page, if needed
-  },
-  debug: process.env.NODE_ENV === 'development', // Enable debug messages in development
+
+  debug: process.env.NODE_ENV === "development", // Enable debug messages in development
 });
 
 export { authOptions as GET, authOptions as POST };
