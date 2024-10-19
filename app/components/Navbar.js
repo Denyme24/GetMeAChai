@@ -89,7 +89,7 @@ const Navbar = () => {
                 >
                   <li className="cursor-pointer">
                     <Link
-                      href={"/Dashboard"}
+                      href={"/dashboard"}
                       className="block md:px-4 md:py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white md:w-full text-xs md:text-lg"
                     >
                       Dashboard
