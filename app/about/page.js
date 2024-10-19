@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import Naman from "../assets/naman.jpg";
+import Naman from "../assets/Naman.jpg";
 
 const page = () => {
   return (
