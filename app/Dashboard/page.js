@@ -1,7 +1,6 @@
-import React from "react";
-import Dashboard from "../components/Dashboard";
+import Dashboard from "@/app/components/Dashboard";
 
-const page = () => {
+const DashboardPage = () => {
   return (
     <>
       <Dashboard />
@@ -9,7 +8,8 @@ const page = () => {
   );
 };
 
-export default page;
+export default DashboardPage;
+
 export const metadata = {
-  title: "Dashboard- Get Me a Chai",
+  title: "Dashboard - Get Me a Chai",
 };
