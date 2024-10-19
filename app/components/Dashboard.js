@@ -29,7 +29,7 @@ const Dashboard = () => {
     setform(fillData);
     // console.log(session.user);
   };
-  
+
   const handleSubmit = async (e) => {
     // update();
     let updProf = await updateProfile(e, session.user.name);

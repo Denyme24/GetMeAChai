@@ -3,6 +3,7 @@ import Image from "next/image";
 import BizImg from "./assets/biz.png";
 import Dollar from "./assets/dollar.png";
 import Followers from "./assets/followers.png";
+import Script from "next/script";
 
 export default function Home() {
   return (
@@ -13,7 +14,7 @@ export default function Home() {
             Buy me a chai
           </div>
           <div className="chai-gif">
-            <script src="https://cdn.lordicon.com/lordicon.js"></script>
+            <Script src="https://cdn.lordicon.com/lordicon.js"></Script>
             <lord-icon
               src="https://cdn.lordicon.com/rmhtxunj.json"
               trigger="loop"

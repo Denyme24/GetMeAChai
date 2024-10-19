@@ -65,7 +65,14 @@ const PaymentPage = ({ username }) => {
 
   return (
     <>
-      <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
+      <Script
+        src="https://checkout.razorpay.com/v1/checkout.js"
+        strategy="lazyOnload"
+      />
+      <Script
+        src="https://cdn.lordicon.com/lordicon.js"
+        strategy="lazyOnload"
+      />
 
       <div className="cover w-full relative">
         <img
@@ -115,7 +122,6 @@ const PaymentPage = ({ username }) => {
               return (
                 <li key={items.id} className="flex items-center gap-2">
                   <div className="image">
-                    <script src="https://cdn.lordicon.com/lordicon.js"></script>
                     <lord-icon
                       src="https://cdn.lordicon.com/xcxzayqr.json"
                       trigger="loop"
@@ -127,7 +133,7 @@ const PaymentPage = ({ username }) => {
                     <span className="font-bold">
                       Rs.{Number.parseInt(items.amount)}
                     </span>{" "}
-                    with a message "{items.message}"
+                    with a message &quot;{items.message}&quot;
                   </div>
                 </li>
               );

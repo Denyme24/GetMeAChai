@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Script from "next/script";
 
 const Navbar = () => {
   const router = useRouter();
@@ -16,11 +17,14 @@ const Navbar = () => {
 
   return (
     <>
+      <Script
+        src="https://cdn.lordicon.com/lordicon.js"
+        strategy="lazyOnload"
+      />
       <nav className="bg-gray-900 text-white flex justify-between items-center px-4 h-16 relative">
         <Link href={"/"}>
           <div className="text-white flex justify-between items-center">
             <span>
-              <script src="https://cdn.lordicon.com/lordicon.js"></script>
               <lord-icon
                 src="https://cdn.lordicon.com/rmhtxunj.json"
                 trigger="loop"
@@ -65,9 +69,9 @@ const Navbar = () => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="m1 1 4 4 4-4"
                   />
                 </svg>
@@ -104,7 +108,7 @@ const Navbar = () => {
                   <li className="cursor-pointer">
                     <Link
                       href={`/${session.user.name}`}
-                      class="block  md:px-4 px-2 py-1 md:py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-xs md:text-lg"
+                      className="block  md:px-4 px-2 py-1 md:py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-xs md:text-lg"
                     >
                       Your page
                     </Link>

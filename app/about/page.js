@@ -16,7 +16,7 @@ const page = () => {
             <span className="text-indigo-400 font-semibold">Get Me a Chai</span>
             , a platform dedicated to helping creators connect with their
             supporters in a simple, transparent, and meaningful way. Whether
-            you're an artist, writer, podcaster, or any kind of creator, we
+            you&apos;re an artist, writer, podcaster, or any kind of creator, we
             provide the tools to let your fans support you by buying you a chai
             (or many)!
           </p>
@@ -48,7 +48,7 @@ const page = () => {
           </div>
         </div>
       </section>
-      <div class="text-white p-6 shadow-md rounded-lg">
+      <div className="text-white p-6 shadow-md rounded-lg">
         <Image
           src={Naman}
           alt="Naman"
@@ -56,8 +56,8 @@ const page = () => {
           height={550}
           width={550}
         />
-        <h4 class="text-xl font-semibold  text-center text-white">Naman</h4>
-        <p class="text-white text-center">Founder & Full-Stack Developer</p>
+        <h4 className="text-xl font-semibold text-center text-white">Naman</h4>
+        <p className="text-white text-center">Founder & Full-Stack Developer</p>
       </div>
     </>
   );
