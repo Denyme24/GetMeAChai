@@ -31,15 +31,14 @@ export const POST = async (req) => {
       { done: true },
       { new: true }
     );
-    
-    // Using temporary redirect with status 302
-    return NextResponse.redirect(
-      'https://get-me-a-chai-theta.vercel.app/' + updatedPayment.to_user + '?paymentdone=true',
-      { status: 302 }
-    );
-  }
-  
-   else {
+
+    const redirectUrl = new URL(
+      `/${updatedPayment.to_user}`,
+      "https://get-me-a-chai-theta.vercel.app"
+    ).toString();
+
+    return Response.redirect(redirectUrl + "?paymentdone=true");
+  } else {
     return NextResponse.json({ success: false, message: "Payment Failed" });
   }
 };

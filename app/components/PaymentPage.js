@@ -42,7 +42,7 @@ const PaymentPage = ({ username }) => {
       description: "Test Transaction",
       image: "https://example.com/your_logo",
       order_id: orderId,
-      callback_url: `${process.env.NEXT_PUBLIC_URL}/api/razorpay`,
+      callback_url: "https://get-me-a-chai-theta.vercel.app/api/razorpay",
       prefill: {
         name: "Gaurav Kumar",
         email: "gaurav.kumar@example.com",
@@ -55,7 +55,9 @@ const PaymentPage = ({ username }) => {
         color: "#3399cc",
       },
       handler: function (response) {
-        console.log(response);
+        console.log("Payment successful:", response);
+        // You can show a success message or update UI here
+        window.location.href = `https://get-me-a-chai-theta.vercel.app/${username}?paymentdone=true`;
       },
     };
 
