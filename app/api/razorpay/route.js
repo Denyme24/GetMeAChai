@@ -32,7 +32,7 @@ export const POST = async (req) => {
       { new: true }
     );
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_URl}/${updatedPayment.to_user}?paymentdone=true`
+      `${process.env.NEXT_PUBLIC_URL}/${updatedPayment.to_user}?paymentdone=true`
     );
   } else {
     return NextResponse.json({ success: false, message: "Payment Failed" });
