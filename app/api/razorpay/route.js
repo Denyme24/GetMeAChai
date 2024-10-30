@@ -31,13 +31,9 @@ export const POST = async (req) => {
       { done: true },
       { new: true }
     );
-
-    const redirectUrl = new URL(
-      `/${updatedPayment.to_user}`,
-      "https://get-me-a-chai-theta.vercel.app"
-    ).toString();
-
-    return Response.redirect(redirectUrl + "?paymentdone=true");
+    return NextResponse.redirect(
+      `${process.env.NEXT_PUBLIC_URL}/${updatedPayment.to_user}?paymentdone=true`
+    );
   } else {
     return NextResponse.json({ success: false, message: "Payment Failed" });
   }
