@@ -44,13 +44,16 @@ export const fetchuser = async (username) => {
 };
 
 export const fetchPayments = async (username) => {
-  let payment = Payment.find({
+  await connectDb(); // Add this line to ensure DB connection
+  let payments = await Payment.find({
     to_user: username,
     done: true,
   })
     .sort({ amount: -1 })
     .lean();
-  return payment;
+
+  console.log("Fetched payments:", payments);
+  return payments;
 };
 
 export const updateProfile = async (data, oldusername) => {

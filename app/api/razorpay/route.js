@@ -22,7 +22,7 @@ export const POST = async (req) => {
       payment_id: body.razorpay_payment_id,
     },
     body.razorpay_signature,
-    process.env.KEY_SECRET
+    secret
   );
 
   if (verifyPayment) {
@@ -31,10 +31,13 @@ export const POST = async (req) => {
       { done: true },
       { new: true }
     );
+    
+    // Using absolute URL for redirect
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_URL}/${updatedPayment.to_user}?paymentdone=true`
+      'https://get-me-a-chai-theta.vercel.app/' + updatedPayment.to_user + '?paymentdone=true'
     );
-  } else {
+  }
+   else {
     return NextResponse.json({ success: false, message: "Payment Failed" });
   }
 };
