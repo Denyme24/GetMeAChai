@@ -44,8 +44,12 @@ export const fetchuser = async (username) => {
 };
 
 export const fetchPayments = async (username) => {
-  // to fetch payments only which have "done : true" status
-  let payment = Payment.find({ to_user: username }).sort({ amount: -1 }).lean();
+  let payment = Payment.find({
+    to_user: username,
+    done: true,
+  })
+    .sort({ amount: -1 })
+    .lean();
   return payment;
 };
 
