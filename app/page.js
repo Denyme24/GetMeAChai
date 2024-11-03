@@ -60,7 +60,7 @@ export default function Home() {
               width={60}
               height={60}
             />
-            <p className="font-bold mt-2">Fund yourself</p>
+            <p className="font-bold mt-2">Community</p>
             <p className="text-sm">
               {" "}
               Create a Strong Community that helps you{" "}
@@ -74,11 +74,8 @@ export default function Home() {
               width={60}
               height={60}
             />
-            <p className="font-bold mt-2">Fund yourself</p>
-            <p className="text-sm">
-              {" "}
-              Create a Strong Community that helps you{" "}
-            </p>
+            <p className="font-bold mt-2">Funding</p>
+            <p className="text-sm"> Fund Inspiration, Brew Connections. </p>
           </div>
           <div className="item z-[1000] p-4 sm:p-7 flex flex-col items-center justify-center text-center">
             <Image
@@ -88,11 +85,8 @@ export default function Home() {
               width={60}
               height={60}
             />
-            <p className="font-bold mt-2">Fans want to Help</p>
-            <p className="text-sm">
-              {" "}
-              Create a Strong Community that helps you{" "}
-            </p>
+            <p className="font-bold mt-2">Fans</p>
+            <p className="text-sm"> Support Creators, Sip by Sip. </p>
           </div>
         </div>
       </div>
@@ -101,7 +95,7 @@ export default function Home() {
         <h2 className="font-bold text-2xl sm:text-3xl text-center">
           My Recent Project
         </h2>
-        <div className="w-full max-w-[560px] aspect-video">
+        <div className="w-full max-w-[560px] aspect-video z-[1000] ">
           <iframe
             className="md:rounded-lg rounded-2xl z-[1000] md:w-full md:h-full w-[50vw] h-[20vh] m-auto"
             src="https://www.youtube.com/embed/NEWT4eQMLEE?si=6E04FCYqXgDagm_m"

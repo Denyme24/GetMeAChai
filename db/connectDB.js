@@ -4,6 +4,7 @@ const connectDb = async () => {
   try {
     const conn = await mongoose.connect(
       `mongodb+srv://rajnaman488:${process.env.DB_PASSWORD}@nextapp-cluster.iikn9.mongodb.net/?retryWrites=true&w=majority&appName=NextApp-Cluster`,
+
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,

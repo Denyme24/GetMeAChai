@@ -44,9 +44,7 @@ const PaymentPage = ({ username }) => {
       order_id: orderId,
       callback_url: `${process.env.NEXT_PUBLIC_URL}/api/razorpay`,
       prefill: {
-        name: "Gaurav Kumar",
-        email: "gaurav.kumar@example.com",
-        contact: "9000090000",
+        name: paymentform.name,
       },
       notes: {
         address: "Razorpay Corporate Office",
@@ -55,7 +53,23 @@ const PaymentPage = ({ username }) => {
         color: "#3399cc",
       },
       handler: function (response) {
-        console.log(response);
+        // Handle the response from Razorpay
+        // console.log("Payment response:", response);
+
+        // Send the response to the server for verification
+        fetch(`${process.env.NEXT_PUBLIC_URL}/api/razorpay`, {
+          method: "POST",
+          body: JSON.stringify(response),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (!data.success) {
+              alert(data.message); // Display the error message
+            }
+          });
       },
     };
 

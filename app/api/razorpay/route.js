@@ -7,8 +7,8 @@ import User from "@/models/user";
 
 export const POST = async (req) => {
   await connectDb();
-  let body = await req.formData();
-  body = Object.fromEntries(body);
+  let body = await req.json();
+  // body = Object.fromEntries(body);
   let p = await Payment.findOne({ oid: body.razorpay_order_id });
   if (!p) {
     return NextResponse.json({ success: false, message: "Order ID not found" });
@@ -31,9 +31,10 @@ export const POST = async (req) => {
       { done: true },
       { new: true }
     );
-    return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_URL}/${updatedPayment.to_user}?paymentdone=true`
-    );
+
+    const redirectUrl = `${process.env.NEXT_PUBLIC_URL}/${updatedPayment.to_user}?paymentdone=true`;
+
+    return NextResponse.redirect(redirectUrl);
   } else {
     return NextResponse.json({ success: false, message: "Payment Failed" });
   }
