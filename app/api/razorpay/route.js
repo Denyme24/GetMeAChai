@@ -32,7 +32,7 @@ export const POST = async (req) => {
       { new: true }
     );
 
-    const redirectUrl = `${process.env.NEXT_PUBLIC_URL}${updatedPayment.to_user}?paymentdone=true`;
+    const redirectUrl = `https://get-me-a-chai-theta.vercel.app/${updatedPayment.to_user}?paymentdone=true`;
 
     return NextResponse.redirect(redirectUrl);
   } else {
