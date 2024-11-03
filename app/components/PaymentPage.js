@@ -57,7 +57,7 @@ const PaymentPage = ({ username }) => {
         // console.log("Payment response:", response);
 
         // Send the response to the server for verification
-        fetch("https://get-me-a-chai-theta.vercel.app/api/razorpay", {
+        fetch(`${process.env.NEXT_PUBLIC_URL}api/razorpay`, {
           method: "POST",
           body: JSON.stringify(response),
           headers: {
