@@ -1,6 +1,6 @@
 // "use client";
 import React from "react";
-import PaymentPage from "../components/PaymentPage";
+import PaymentPage from "../../components/PaymentPage";
 import User from "@/models/user";
 import connectDb from "@/db/connectDB";
 import { notFound } from "next/navigation";
