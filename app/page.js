@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import BizImg from "./assets/biz.png";
-import Dollar from "./assets/dollar.png";
-import Followers from "./assets/followers.png";
+import BizImg from "@/assets/biz.png";
+import Dollar from "@/assets/dollar.png";
+import Followers from "@/assets/followers.png";
 import Script from "next/script";
 
 export default function Home() {
